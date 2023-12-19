@@ -1,4 +1,6 @@
 
+# This script analyzes housing data from Luxembourg
+
 rm(list = ls())
 
 library(tidyverse)
