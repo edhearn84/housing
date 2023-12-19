@@ -5,7 +5,7 @@ library(tidyverse)
 library(readxl)
 library(janitor)
 
-setwd("C:/Users/ehearn/OneDrive - Secretariat Advisors LLC/Desktop/Miscellaneous/housing")
+setwd("~/Desktop/Miscellaneous/housing")
 
 # Download raw Excel
 
