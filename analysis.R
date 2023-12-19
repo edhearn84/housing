@@ -7,7 +7,7 @@ library(tidyverse)
 library(readxl)
 library(janitor)
 
-setwd("C:/Users/ehearn/OneDrive - Secretariat Advisors LLC/Desktop/Miscellaneous/housing")
+setwd("~/Desktop/Miscellaneous/housing")
 
 #Let's load the datasets:
 
