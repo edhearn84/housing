@@ -27,39 +27,6 @@ country_level_data =
 
 ```
 
-Create a function to compute a Laspeyeres price index at different levels of data aggregation.
-
-```{r}
-
-get_laspeyeres = function(dataset , start_year = "2010"){
-  
-  # "substitute()" replaces the variable "dataset" by its bound value and "deparse" converts the variable name into a string
-  which_dataset = deparse(substitute(dataset))
-  
-  # Detection of "commune" in named string, grouping variable set to "locality" and NULL if not; use of "quo" delays evaluation of code until "!!group_var" code below
-  group_var = if(grepl("commune" , which_dataset)){
-    quo(locality)
-  } else {
-    NULL
-  }
-  
-  dataset %>%
-    group_by(!!group_var) %>%
-    mutate(p0 = ifelse(year == start_year , 
-                       average_price_nominal_euros , 
-                       NA)) %>%
-    fill(p0 , .direction = "down") %>%
-    mutate(p0_m2 = ifelse(year == start_year , 
-                          average_price_m2_nominal_euros , 
-                          NA)) %>%
-    fill(p0_m2 , .direction = "down") %>%
-    ungroup() %>%
-    mutate(
-      p1 = average_price_nominal_euros/p0*100 , 
-      p1_m2 = average_price_m2_nominal_euros/p0_m2*100)
-}
-
-```
 
 Compute Laspeyeres for commune-level data.
 
@@ -89,29 +56,6 @@ communes = c("Luxembourg",
 
 ```
 
-
-Write a function to create a plot of price indices.
-
-```{r}
-
-make_plot = function(commune){
-  
-  commune_data = commune_level_data %>%
-    filter(locality == commune)
-  
-  data_to_plot = bind_rows(
-    country_level_data , 
-    commune_data
-  )
-  
-  ggplot(data_to_plot) + 
-    geom_line(aes(y = p1_m2 , 
-                  x = year , 
-                  group = locality , 
-                  color = locality))
-}
-
-```
 
 Create commune plots.
 
